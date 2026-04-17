@@ -9,6 +9,7 @@ draw :: proc(
 	texture: k2.Texture,
 	x: f32,
 	y: f32,
+	scale: [2]f32,
 	rotation: f32 = 0.0,
 	color: k2.Color = k2.WHITE,
 ) {
@@ -20,7 +21,7 @@ draw :: proc(
 	k2.draw_texture_ex(
 		texture,
 		{f32(frame.x), f32(frame.y), flip_x * f32(frame.width), flip_y * f32(frame.height)},
-		{x, y, f32(frame.width), f32(frame.height)},
+		{x, y, f32(frame.width) * scale.x, f32(frame.height) * scale.y},
 		{0, 0},
 		rotation,
 		color,
@@ -32,10 +33,11 @@ fsm_draw :: proc(
 	texture: k2.Texture,
 	x: f32,
 	y: f32,
+	scale: [2]f32 = {1, 1},
 	rotation: f32 = 0.0,
 	color: k2.Color = k2.WHITE,
 ) {
 	animation := anima_fsm.current_animation(self)
-	draw(animation, texture, x, y, rotation, color)
+	draw(animation, texture, x, y, scale, rotation, color)
 }
 
